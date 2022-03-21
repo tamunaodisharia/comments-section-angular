@@ -20,5 +20,19 @@ export class DataService {
       a.score < b.score ? 1 : -1
     );
   }
-  getUser() {}
+  calculateLength() {
+    let length = this.comments.reduce(
+      (previousValue: any, currentValue: any) =>
+        previousValue +
+        currentValue.replies.length +
+        currentValue.replies.reduce(
+          (previousValue: any, currentValue: any) =>
+            previousValue + currentValue.replies.length,
+          0
+        ),
+      0
+    );
+    length += this.comments.length;
+    return length;
+  }
 }

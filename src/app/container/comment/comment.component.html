@@ -1,26 +1,51 @@
 <div class="commentContainer">
   <div class="comment">
-    <div class="vote">
-      <button class="upvote">+</button>
-      <h2 class="voteNumber">{{ comment.score }}</h2>
-      <button class="downvote">_</button>
-    </div>
+    <ng-container *ngIf="!toggleEdit; else edit">
+      <div class="vote">
+        <button class="upvote" (click)="upvoteComment(comment)">+</button>
+        <h2 class="voteNumber">{{ comment.score }}</h2>
+        <button class="downvote" (click)="downvoteComment(comment)">_</button>
+      </div>
 
-    <div class="header">
-      <img [src]="'../../../assets' + comment.user.image.png" class="avatar" />
-      <h1>{{ comment.user.username }}</h1>
+      <div class="header">
+        <img
+          [src]="'../../../assets' + comment.user.image.png"
+          class="avatar"
+        />
+        <h1>{{ comment.user.username }}</h1>
 
-      <h3>{{ comment.createdAt }}</h3>
-      <button
-        *ngIf="comment.user.username !== currentUser.username; else curUser"
-        class="reply"
-      >
-        Reply
-      </button>
-      <p class="commentText">
-        {{ comment.content }}
-      </p>
-    </div>
+        <h3>{{ comment.createdAt }}</h3>
+        <button
+          *ngIf="comment.user.username !== currentUser.username; else curUser"
+          class="reply"
+          (click)="replyToComment(comment)"
+        >
+          Reply
+        </button>
+        <p class="commentText">
+          {{ comment.content }}
+        </p>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="toggleReply">
+      <div class="addComment addReply">
+        <img [src]="'../../../assets' + currentUser.image.png" class="avatar" />
+
+        <textarea
+          class="input"
+          type="text"
+          placeholder="Add a reply..."
+          #textarea2
+        ></textarea>
+        <button
+          class="update"
+          type="submit"
+          (click)="addComment(comment, textarea2.value)"
+        >
+          REPLY
+        </button>
+      </div>
+    </ng-container>
   </div>
   <ng-container *ngIf="comment.replies.length">
     <div
@@ -31,7 +56,28 @@
     </div>
   </ng-container>
 </div>
+
 <ng-template #curUser>
-  <button class="edit">Edit</button>
-  <button class="delete">Delete</button>
+  <button class="edit" (click)="editComment(comment)">Edit</button>
+  <button class="delete" (click)="deleteComment(comment)">Delete</button>
+</ng-template>
+
+<ng-template #edit>
+  <div class="addComment">
+    <img [src]="'../../../assets' + currentUser.image.png" class="avatar" />
+
+    <textarea
+      class="input"
+      type="text"
+      [value]="comment.content"
+      #textarea1
+    ></textarea>
+    <button
+      class="update"
+      type="submit"
+      (click)="updateComment(comment, textarea1.value)"
+    >
+      UPDATE
+    </button>
+  </div>
 </ng-template>

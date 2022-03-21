@@ -10,7 +10,9 @@ import { DataService } from '../services/data.service';
 export class ContainerComponent implements OnInit {
   constructor(private dataService: DataService) {}
 
-  comments = this.dataService.comments;
+  comments = this.dataService.comments.sort(
+    (a: { score: number }, b: { score: number }) => (a.score < b.score ? 1 : -1)
+  );
 
   ngOnInit(): void {}
 }
