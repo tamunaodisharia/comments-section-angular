@@ -28,23 +28,10 @@
       </div>
     </ng-container>
     <ng-container *ngIf="toggleReply">
-      <div class="addComment addReply">
-        <img [src]="'../../../assets' + currentUser.image.png" class="avatar" />
-
-        <textarea
-          class="input"
-          type="text"
-          placeholder="Add a reply..."
-          #textarea2
-        ></textarea>
-        <button
-          class="update"
-          type="submit"
-          (click)="addComment(comment, textarea2.value)"
-        >
-          REPLY
-        </button>
-      </div>
+      <app-add-comment
+        [comment]="comment"
+        [(toggleReply)]="toggleReply"
+      ></app-add-comment>
     </ng-container>
   </div>
   <ng-container *ngIf="comment.replies.length">
@@ -63,21 +50,8 @@
 </ng-template>
 
 <ng-template #edit>
-  <div class="addComment">
-    <img [src]="'../../../assets' + currentUser.image.png" class="avatar" />
-
-    <textarea
-      class="input"
-      type="text"
-      [value]="comment.content"
-      #textarea1
-    ></textarea>
-    <button
-      class="update"
-      type="submit"
-      (click)="updateComment(comment, textarea1.value)"
-    >
-      UPDATE
-    </button>
-  </div>
+  <app-add-comment
+    [comment]="comment"
+    [(toggleEdit)]="toggleEdit"
+  ></app-add-comment>
 </ng-template>

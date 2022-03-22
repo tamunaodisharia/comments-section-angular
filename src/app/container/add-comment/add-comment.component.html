@@ -1,0 +1,56 @@
+<div class="addComment addReply" *ngIf="toggleReply; else edit">
+  <img [src]="'../../../assets' + currentUser.image.png" class="avatar" />
+
+  <textarea
+    class="input"
+    type="text"
+    placeholder="Add a reply..."
+    #textarea2
+  ></textarea>
+  <button
+    class="update"
+    type="submit"
+    (click)="addComment(comment, textarea2.value)"
+  >
+    REPLY
+  </button>
+</div>
+
+<ng-template #edit>
+  <div class="addComment" *ngIf="toggleEdit; else mainAddComponent">
+    <img [src]="'../../../assets' + currentUser.image.png" class="avatar" />
+
+    <textarea
+      class="input"
+      type="text"
+      [value]="comment.content"
+      #textarea1
+    ></textarea>
+    <button
+      class="update"
+      type="submit"
+      (click)="updateComment(comment, textarea1.value)"
+    >
+      UPDATE
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #mainAddComponent>
+  <div class="addComment mainAddComponen">
+    <img [src]="'../assets' + currentUser.image.png" class="avatar" />
+    <textarea
+      class="input"
+      type="text"
+      placeholder="Add a commment..."
+      #textarea3
+    ></textarea>
+    <button
+      class="send"
+      type="submit"
+      (click)="addComment(comment, textarea3.value)"
+    >
+      SEND
+    </button>
+  </div>
+</ng-template>
